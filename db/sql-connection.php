@@ -6,7 +6,7 @@ class SqlConnection
 
     private function __construct()
     {
-        $hostname = "54.242.27.17";
+        $hostname = "localhost";
         $database = "petshop";
         $username = "root";
         $password = "nZHeEYlOS5bs";
