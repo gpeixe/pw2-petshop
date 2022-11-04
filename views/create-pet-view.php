@@ -12,7 +12,7 @@ $petController = new PetController($petRepository);
 if (isPostRequest()) {
     $result = $petController->create($_POST);
     if ($result) {
-        header("Location: http://localhost/pw2-petshop/views/list-pets-view.php");
+        header("Location:http://54.242.27.17/pw2-petshop/views/list-pets-view.php");
     }
 }
 ?>

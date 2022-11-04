@@ -11,7 +11,7 @@ $petController = new PetController($petRepository);
 
 function navigateToListPetsView()
 {
-    header("Location: http://localhost/pw2-petshop/views/list-pets-view.php");
+    header("Location:http://54.242.27.17/pw2-petshop/views/list-pets-view.php");
 }
 
 function redirectIfPetIdIsNotPresent()

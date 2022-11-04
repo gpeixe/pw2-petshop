@@ -20,7 +20,7 @@ $petController = new PetController($petRepository);
 
 function navigateToListAppointmentsView()
 {
-    header("Location: http://localhost/pw2-petshop/views/list-appointments-view.php");
+    header("Location:http://54.242.27.17/pw2-petshop/views/list-appointments-view.php");
 }
 
 
