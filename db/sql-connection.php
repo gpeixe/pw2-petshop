@@ -9,7 +9,7 @@ class SqlConnection
         $hostname = "localhost";
         $database = "petshop";
         $username = "root";
-        $password = "nZHeEYlOS5bs";
+        $password = "";
 
         $dsn = "mysql:host=$hostname;dbname=$database";
         $options = [
