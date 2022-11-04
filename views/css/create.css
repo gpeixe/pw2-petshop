@@ -1,0 +1,100 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing:  border-box;
+    text-decoration: none;
+}
+
+.c-wrapper {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.c-navegador {
+    background-color: rgb(9, 186, 209);
+    display: flex;
+    width: 100%;
+    height: 10vh;
+    color: aliceblue;
+    margin-top: 0;
+}
+
+
+
+.c-cadastro {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 30%;
+    gap: 2vh;
+    padding: 2vh 10vh;
+    border: none;
+    border-radius: 10%;
+}
+
+.c-formulario {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 3vh;
+    font-family: Arial, Helvetica, sans-serif;;
+}
+
+.c-titulo {
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(9, 186, 209);
+    font-weight: bold;
+}
+
+.c-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    margin: 10px;
+    font-size: 1rem;
+}
+
+
+input {
+    border: 1px solid rgba(61, 61, 61, 0.2);
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 1rem;
+}
+.text-input{
+    width: 30em;
+    height: 3em;
+  }
+ 
+  .c-botao {
+    margin: 2em 3.6em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(9, 186, 209);
+    width: 5%;
+    height: 40px;
+    border: none;
+    box-shadow: 4px 5px 4px rgba(0, 0, 0, 0.10);
+    border-radius: 7px;
+    text-align: center;
+    padding: 15px 40px;
+    color: aliceblue;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 1.2rem;
+   
+}
+.c-botao:hover{
+    cursor: pointer;
+    background-color: rgba(145, 202, 209, 0.664);
+}
+.destaque:active {
+    box-shadow: none;
+}
