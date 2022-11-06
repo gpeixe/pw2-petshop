@@ -8,7 +8,7 @@ class Employee {
 
     function __construct($name, $email) {
         $this->name = $name;
-        $this->email = $email;
+        $this->setEmail($email);
     }
 
     function setCreatedAt ($createdAt) {
@@ -41,7 +41,12 @@ class Employee {
     }
 
     function setEmail($email) {
-        $this->email = $email;
+        $isValidEmail = filter_var($email, FILTER_VALIDATE_EMAIL);
+        if ($isValidEmail) {
+            $this->email = $email;
+        } else {
+            throw new Error('O campo email deve ser um e-mail válido.');
+        }
     }
 }
 

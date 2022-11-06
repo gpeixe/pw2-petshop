@@ -27,12 +27,17 @@ redirectIfEmployeeIdIsNotPresent();
 $employee = $employeeController->getOne($_GET['employeeId']);
 
 if (isPostRequest()) {
-    $_POST['id'] = $_GET['employeeId'];
-    $result = $employeeController->update($_POST);
-    if (gettype($result) === 'string') {
-        echo "<h3>Parametro $result é obrigatório.</h3>";
-    } else {
-        navigateToListEmployeesView();
+    try {
+        $_POST['id'] = $_GET['employeeId'];
+        $result = $employeeController->update($_POST);
+        if (gettype($result) === 'string') {
+            echo "<h3>Parametro $result é obrigatório.</h3>";
+        } else {
+            navigateToListEmployeesView();
+        }
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+        echo "<h3>$error</h3>";
     }
 } else if (!$employee) {
     navigateToListEmployeesView();

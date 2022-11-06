@@ -9,10 +9,17 @@ $employeeRepository = new EmployeeRepository($sqlConnection);
 $employeeController = new EmployeeController($employeeRepository);
 
 if (isPostRequest()) {
-    $result = $employeeController->create($_POST);
-    if ($result) {
-        $host = $_SERVER['HTTP_HOST'];
-        header("Location:http://$host/pw2-petshop/views/list-employees-view.php");
+    try {
+        $result = $employeeController->create($_POST);
+        if (gettype($result) === 'string') {
+            echo "<h3>Parametro $result é obrigatório.</h3>";
+        } else if ($result) {
+            $host = $_SERVER['HTTP_HOST'];
+            header("Location:http://$host/pw2-petshop/views/list-employees-view.php");
+        }
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+        echo "<h3>$error</h3>";
     }
 }
 

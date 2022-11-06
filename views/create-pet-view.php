@@ -10,10 +10,17 @@ $petRepository = new PetRepository($sqlConnection);
 $petController = new PetController($petRepository);
 
 if (isPostRequest()) {
-    $result = $petController->create($_POST);
-    if ($result) {
-        $host = $_SERVER['HTTP_HOST'];
-        header("Location:http://$host/pw2-petshop/views/list-pets-view.php");
+    try {
+        $result = $petController->create($_POST);
+        if (gettype($result) === 'string') {
+            echo "<h3>Parametro $result é obrigatório.</h3>";
+        } else if ($result) {
+            $host = $_SERVER['HTTP_HOST'];
+            header("Location:http://$host/pw2-petshop/views/list-pets-view.php");
+        }
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+        echo "<h3>$error</h3>";
     }
 }
 ?>
@@ -21,7 +28,7 @@ if (isPostRequest()) {
 <!DOCTYPE html>
 <html lang="pt-Br">
 
-<head>  
+<head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,7 +53,7 @@ if (isPostRequest()) {
                 </div>
                 <div class="c-campo">
                     <label for="owerPhone">Telefone do dono</label>
-                    <input type="tel" name="ownerPhone" id="ownerPhone" class="text-input" required placeholder="(xx) xxxxx-xxxx">
+                    <input type="tel" name="ownerPhone" id="ownerPhone" class="text-input" required placeholder="16987654321">
                 </div>
                 <button class="c-botao destaque" type="submit">Salvar</button>
             </form>

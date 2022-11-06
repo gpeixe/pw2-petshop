@@ -10,7 +10,18 @@ class Pet {
     function __construct($name, $breed, $ownerPhone) {
         $this->name = $name;
         $this->breed = $breed;
-        $this->ownerPhone = $ownerPhone;
+        $this->setOwnerPhone($ownerPhone);
+    }
+
+    function setOwnerPhone($ownerPhone) {
+        $exp = "/^\d{11}$/i";
+        $isValidPhone = preg_match($exp, $ownerPhone);
+        if ($isValidPhone) {
+            $this->ownerPhone = $ownerPhone;
+        } else {
+            throw new Error('Telefone do dono deve ser 11 números em sequencia.');
+        }
+
     }
 
     function getId () {

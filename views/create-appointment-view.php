@@ -28,11 +28,18 @@ function navigateToListAppointmentsView()
 
 
 if (isPostRequest()) {
-    $employeeId =$_POST['employeeId'];
-    $petId = $_POST['petId'];
-    $result = $appointmentController->create($petId, $employeeId);
-    if ($result) {
-        navigateToListAppointmentsView();
+    try {
+        $employeeId = $_POST['employeeId'];
+        $petId = $_POST['petId'];
+        $result = $appointmentController->create($petId, $employeeId);
+        if (gettype($result) === 'string') {
+            echo "<h3>Parametro $result é obrigatório.</h3>";
+        } else  if ($result) {
+            navigateToListAppointmentsView();
+        }
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+        echo "<h3>$error</h3>";
     }
 }
 
@@ -59,9 +66,9 @@ if (isPostRequest()) {
                 <div class="c-campo">
                     <label for="petId">Selecionar Pet</label>
                     <select name="petId" id="petId">
-                        <?php 
+                        <?php
                         $pets = $petController->getAll();
-                        foreach($pets as $pet) {
+                        foreach ($pets as $pet) {
                             $petId = $pet->getId();
                             $petName = $pet->getName();
                             echo "<option value='$petId'>$petName</option>";
@@ -70,15 +77,15 @@ if (isPostRequest()) {
                     </select>
                 </div>
                 <div class="c-campo">
-                <label for="employeeId">Selecionar funcionário</label>
+                    <label for="employeeId">Selecionar funcionário</label>
                     <select name="employeeId" id="employeeId">
-                        <?php 
+                        <?php
                         $employees = $employeeController->getAll();
-                            foreach($employees as $employee) {
-                                $employeeId = $employee->getId();
-                                $employeeName = $employee->getName();
-                                echo "<option value='$employeeId'>$employeeName</option>";
-                            }
+                        foreach ($employees as $employee) {
+                            $employeeId = $employee->getId();
+                            $employeeName = $employee->getName();
+                            echo "<option value='$employeeId'>$employeeName</option>";
+                        }
                         ?>
                     </select>
                 </div>
