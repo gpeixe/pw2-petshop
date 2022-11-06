@@ -1,16 +1,19 @@
-<?php 
+<?php
 
 include_once(dirname(__FILE__) . "/controller.php");
 include_once(dirname(__FILE__) . "/../models/employee.php");
 
-class EmployeeController extends Controller {
+class EmployeeController extends Controller
+{
     private $employeeRepository;
 
-    function __construct($employeeRepository) {
+    function __construct($employeeRepository)
+    {
         $this->employeeRepository = $employeeRepository;
     }
 
-    function getAll() {
+    function getAll()
+    {
         $employeesFromDb = $this->employeeRepository->getAll();
         $employees = array();
         foreach ($employeesFromDb as $employeeFromDb) {
@@ -20,38 +23,51 @@ class EmployeeController extends Controller {
         return $employees;
     }
 
-    function getOne($employeeId) {
+    function getOne($employeeId)
+    {
         $employeeFromDb = $this->employeeRepository->getOne($employeeId);
-        if(!$employeeFromDb) return null;
+        if (!$employeeFromDb) return null;
         $employee = $this->_mapEmployeeFromDbToModel($employeeFromDb);
         return $employee;
     }
 
-    function delete($employeeId) {
+    function delete($employeeId)
+    {
         return $this->employeeRepository->delete($employeeId);
     }
 
-    function update($employeeToUpdate) {
-        $error = parent::_validateRequestFields(['id', 'name', 'email'], $employeeToUpdate);
-        if ($error) return $error;
-        $id = $employeeToUpdate['id'];
-        $name = $employeeToUpdate['name'];
-        $email = $employeeToUpdate['email'];
-        $employee = new Employee($name, $email);
-        $employee->setId($id);
-        return $this->employeeRepository->update($employee);
+    function update($employeeToUpdate)
+    {
+        try {
+            $error = parent::_validateRequestFields(['id', 'name', 'email'], $employeeToUpdate);
+            if ($error) return $error;
+            $id = $employeeToUpdate['id'];
+            $name = $employeeToUpdate['name'];
+            $email = $employeeToUpdate['email'];
+            $employee = new Employee($name, $email);
+            $employee->setId($id);
+            return $this->employeeRepository->update($employee);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
-    function create($post) {
-        $error = parent::_validateRequestFields(['name', 'email'], $post);
-        if ($error) return $error;
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-        $employee = new Employee($name, $email);
-        return $this->employeeRepository->create($employee);
+    function create($post)
+    {
+        try {
+            $error = parent::_validateRequestFields(['name', 'email'], $post);
+            if ($error) return $error;
+            $name = $_POST['name'];
+            $email = $_POST['email'];
+            $employee = new Employee($name, $email);
+            return $this->employeeRepository->create($employee);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
-    function getAllByPetName($petName) {
+    function getAllByPetName($petName)
+    {
         $employeesFromDb = $this->employeeRepository->getAllByPetName($petName);
         $employees = array();
         foreach ($employeesFromDb as $employeeFromDb) {
@@ -61,12 +77,11 @@ class EmployeeController extends Controller {
         return $employees;
     }
 
-    private function _mapEmployeeFromDbToModel($employeeFromDb) {
+    private function _mapEmployeeFromDbToModel($employeeFromDb)
+    {
         $employee = new Employee($employeeFromDb['NOME'], $employeeFromDb['EMAIL']);
         $employee->setId($employeeFromDb['ID']);
         $employee->setCreatedAt($employeeFromDb['DATACADASTRO']);
         return $employee;
     }
 }
-
-?>
