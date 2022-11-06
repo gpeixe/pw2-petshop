@@ -51,9 +51,9 @@ class PetRepository {
         print_r("preparing query: " . $query);
         try {
             $stmt =  $this->sqlConnection->prepare($query);
-        } catch (\Throwable $th) {
-            print_r("th: ") . $th;
-           print_r("crashou");
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            exit;
         }
         print_r("executing query...");
         $stmt->execute([$petName, $petBreed, $ownerPhone]);
