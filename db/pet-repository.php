@@ -49,7 +49,9 @@ class PetRepository {
         $ownerPhone = $pet->getOwnerPhone();
         $query = "INSERT INTO ANIMAL (NOME, RACA, TELDONO, DATACADASTRO) VALUES (?, ?, ?, NOW());";
         $stmt =  $this->sqlConnection->prepare($query);
+        print_r("executing query...");
         $stmt->execute([$petName, $petBreed, $ownerPhone]);
+        print_r("finish query...");
         if ($stmt->rowCount() > 0) return true;
         else return false;
     }

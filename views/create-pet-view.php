@@ -11,7 +11,7 @@ $petController = new PetController($petRepository);
 
 if (isPostRequest()) {
     $result = $petController->create($_POST);
-    print_r("host: ", $host);
+    print_r("result: " . $result);
     if ($result) {
         $host = $_SERVER['HTTP_HOST'];
         

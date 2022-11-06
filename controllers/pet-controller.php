@@ -50,6 +50,7 @@ class PetController extends Controller {
         $breed = $data['breed'];
         $ownerPhone = $data['ownerPhone'];
         $pet = new Pet($name, $breed, $ownerPhone);
+        print_r("calling petRepository...");
         return $this->petRepository->create($pet);
     }
 
