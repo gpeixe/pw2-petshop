@@ -33,6 +33,7 @@ class PetController extends Controller
 
     function update($petToUpdate)
     {
+        try {
             $error = parent::_validateRequestFields(['id', 'name', 'breed', 'ownerPhone'], $petToUpdate);
             if ($error) return $error;
             $id = $petToUpdate['id'];
@@ -42,7 +43,9 @@ class PetController extends Controller
             $pet = new Pet($name, $breed, $ownerPhone);
             $pet->setId($id);
             return $this->petRepository->update($pet);
-       
+        } catch (Exception $e) {
+            throw $e;
+        }
     }
 
     function delete($petId)
@@ -52,6 +55,7 @@ class PetController extends Controller
 
     function create($data)
     {
+        try {
             $error = parent::_validateRequestFields(['name', 'breed', 'ownerPhone'], $data);
             if ($error) return $error;
             $name = $data['name'];
@@ -59,6 +63,9 @@ class PetController extends Controller
             $ownerPhone = $data['ownerPhone'];
             $pet = new Pet($name, $breed, $ownerPhone);
             return $this->petRepository->create($pet);
+        } catch (Exception $e) {
+            throw $e;
+        }
     }
 
     function getAllByEmployeeNameOrEmail($employeeNameOrEmail)

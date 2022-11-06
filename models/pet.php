@@ -19,7 +19,7 @@ class Pet {
         if ($isValidPhone) {
             $this->ownerPhone = $ownerPhone;
         } else {
-           print_r('<hr>Telefone do dono deve ser 11 números em sequencia.</h3>');
+          throw new Error('Telefone do dono deve ser 11 números em sequencia.');
         }
 
     }

@@ -38,6 +38,7 @@ class EmployeeController extends Controller
 
     function update($employeeToUpdate)
     {
+        try {
             $error = parent::_validateRequestFields(['id', 'name', 'email'], $employeeToUpdate);
             if ($error) return $error;
             $id = $employeeToUpdate['id'];
@@ -46,18 +47,23 @@ class EmployeeController extends Controller
             $employee = new Employee($name, $email);
             $employee->setId($id);
             return $this->employeeRepository->update($employee);
-       
+        } catch (Exception $e) {
+            throw $e;
+        }
     }
 
     function create($post)
     {
+        try {
             $error = parent::_validateRequestFields(['name', 'email'], $post);
             if ($error) return $error;
             $name = $_POST['name'];
             $email = $_POST['email'];
             $employee = new Employee($name, $email);
             return $this->employeeRepository->create($employee);
-        
+        } catch (Exception $e) {
+            throw $e;
+        }
     }
 
     function getAllByPetName($petName)
