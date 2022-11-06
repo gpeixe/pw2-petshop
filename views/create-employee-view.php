@@ -49,7 +49,7 @@ if (isPostRequest()) {
                 </div>
                 <div class="c-campo">
                     <label for="email">Email</label>
-                    <input type="email" name="email" id="email" class="text-input" required>
+                    <input type="text" name="email" id="email" class="text-input" required>
                 </div>
                 <button class="c-botao destaque" type="submit">Salvar</button>
             </form>
