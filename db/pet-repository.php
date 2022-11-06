@@ -48,7 +48,7 @@ class PetRepository {
         $petBreed = $pet->getBreed();
         $ownerPhone = $pet->getOwnerPhone();
         $query = "INSERT INTO animal (NOME, RACA, TELDONO, DATACADASTRO) VALUES (?, ?, ?, NOW());";
-        print_r("preparing query: " . $query);
+        print_r("preparing sqlConnection->query: " . $query);
         try {
             $stmt =  $this->sqlConnection->prepare($query);
         } catch (Exception $e) {
