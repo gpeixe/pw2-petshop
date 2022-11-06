@@ -12,7 +12,7 @@ $employeeRepository = new EmployeeRepository($sqlConnection);
 $employeeController = new EmployeeController($employeeRepository);
 $petRepository = new PetRepository($sqlConnection);
 $petController = new PetController($petRepository);
-
+$host = $_SERVER['HTTP_HOST'];
 
 if (isset($_GET['deleteId']) && !empty($_GET['deleteId'])) {
     $employeeId = $_GET['deleteId'];
@@ -93,8 +93,8 @@ if (isset($_GET['deleteId']) && !empty($_GET['deleteId'])) {
                     echo "<td class='item'>$name</td>";
                     echo "<td class='item'>$email</td>";
                     echo "<td class='item'>$createdAt</td>";
-                    echo "<td class='item'><a href='http://localhost/pw2-petshop/views/update-employee-view.php?employeeId=$id'><img src='https://img.icons8.com/tiny-glyph/16/000000/edit.png'/></a></td>";
-                    echo "<td class='item'><a href='http://localhost/pw2-petshop/views/list-employees-view.php?deleteId=$id'><img src='https://img.icons8.com/small/16/000000/trash--v3.png'/></a></td>";
+                    echo "<td class='item'><a href='http://$host/pw2-petshop/views/update-employee-view.php?employeeId=$id'><img src='https://img.icons8.com/tiny-glyph/16/000000/edit.png'/></a></td>";
+                    echo "<td class='item'><a href='http://$host/pw2-petshop/views/list-employees-view.php?deleteId=$id'><img src='https://img.icons8.com/small/16/000000/trash--v3.png'/></a></td>";
                     echo "</tr>";
                 }
                 ?>

@@ -8,7 +8,7 @@ include_once("../controllers/employee-controller.php");
 include_once("../db/pet-repository.php");
 include_once("../controllers/pet-controller.php");
 
-
+$host = $_SERVER['HTTP_HOST'];
 $sqlConnection = SqlConnection::getConnection();
 $appointmentRepository = new AppointmentRepository($sqlConnection);
 $appointmentController = new AppointmentController($appointmentRepository);
@@ -74,7 +74,7 @@ if (isset($_GET['deleteId']) && !empty($_GET['deleteId'])) {
                     echo "<td class='item'>$employeeName</td>";
                     echo "<td class='item'>$email</td>";
                     echo "<td class='item'>$date</td>";
-                    echo "<td class='item'><a href='http://localhost/pw2-petshop/views/list-appointments-view.php?deleteId=$id'><img src='https://img.icons8.com/small/16/000000/trash--v3.png'/></a></td>";
+                    echo "<td class='item'><a href='http://$host/pw2-petshop/views/list-appointments-view.php?deleteId=$id'><img src='https://img.icons8.com/small/16/000000/trash--v3.png'/></a></td>";
                     echo "</tr>";
                 }
                 ?>
