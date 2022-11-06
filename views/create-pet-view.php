@@ -12,6 +12,7 @@ $petController = new PetController($petRepository);
 if (isPostRequest()) {
     try {
         $result = $petController->create($_POST);
+        print_r("nao deu erro view;");
         if (gettype($result) === 'string') {
             echo "<h3>Parametro $result é obrigatório.</h3>";
         } else if ($result) {
@@ -19,6 +20,7 @@ if (isPostRequest()) {
             header("Location:http://$host/pw2-petshop/views/list-pets-view.php");
         }
     } catch (Exception $e) {
+        print_r("deu erro view;");
         $error = $e->getMessage();
         echo "<h3>$error</h3>";
     }
