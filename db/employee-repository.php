@@ -32,6 +32,7 @@ class EmployeeRepository {
     }
 
     function update($employee) {
+        try {
         $employeeName = $employee->getName();
         $employeeEmail = $employee->getEmail();
         $employeeId = $employee->getId();
@@ -40,16 +41,24 @@ class EmployeeRepository {
         $stmt->execute([$employeeName, $employeeEmail, $employeeId]);
         if ($stmt->rowCount() > 0) return true;
         else return false;
+    } catch (Exception $e) {
+        throw new ErrorException('Email já cadastrado.');
+    }
     }
 
     function create($employee) {
-        $employeeName = $employee->getName();
-        $employeeEmail = $employee->getEmail();
-        $query = "INSERT INTO funcionário (NOME, EMAIL, DATACADASTRO) VALUES (?, ?, NOW());";
-        $stmt =  $this->sqlConnection->prepare($query);
-        $stmt->execute([$employeeName, $employeeEmail]);
-        if ($stmt->rowCount() > 0) return true;
-        else return false;
+        try {
+            $employeeName = $employee->getName();
+            $employeeEmail = $employee->getEmail();
+            $query = "INSERT INTO funcionário (NOME, EMAIL, DATACADASTRO) VALUES (?, ?, NOW());";
+            $stmt =  $this->sqlConnection->prepare($query);
+            $stmt->execute([$employeeName, $employeeEmail]);
+            if ($stmt->rowCount() > 0) return true;
+            else return false;
+        } catch (Exception $e) {
+            throw new ErrorException('Email já cadastrado.');
+        }
+       
     }
 
     function getAllByPetName($petName) {
@@ -60,5 +69,3 @@ class EmployeeRepository {
     }
 
 }
-
-?>
