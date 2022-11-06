@@ -49,7 +49,12 @@ class PetRepository {
         $ownerPhone = $pet->getOwnerPhone();
         $query = "INSERT INTO ANIMAL (NOME, RACA, TELDONO, DATACADASTRO) VALUES (?, ?, ?, NOW());";
         print_r("preparing query: " . $query);
-        $stmt =  $this->sqlConnection->prepare($query);
+        try {
+            $stmt =  $this->sqlConnection->prepare($query);
+        } catch (\Throwable $th) {
+            print_r("th: ") . $th;
+           print_r("crashou");
+        }
         print_r("executing query...");
         $stmt->execute([$petName, $petBreed, $ownerPhone]);
         print_r("finish query...");
