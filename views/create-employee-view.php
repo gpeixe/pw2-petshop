@@ -4,7 +4,6 @@ include_once("../db/sql-connection.php");
 include_once("../db/employee-repository.php");
 include_once("../controllers/employee-controller.php");
 include_once("./helpers/http-helper.php");
-print_r("host: " . $_SERVER['HTTP_HOST']);
 $sqlConnection = SqlConnection::getConnection();
 $employeeRepository = new EmployeeRepository($sqlConnection);
 $employeeController = new EmployeeController($employeeRepository);

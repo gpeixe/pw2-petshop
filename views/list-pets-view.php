@@ -17,10 +17,7 @@ $host = $_SERVER['HTTP_HOST'];
 if (isset($_GET['deleteId']) && !empty($_GET['deleteId'])) {
     $petId = $_GET['deleteId'];
     $petController->delete($petId);
-} else if (isPostRequest() && isset($_POST['value'])) {
-    print_r($_POST);
-   
-}
+} 
 ?>
 
 

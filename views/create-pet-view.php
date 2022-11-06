@@ -11,11 +11,9 @@ $petController = new PetController($petRepository);
 
 if (isPostRequest()) {
     $result = $petController->create($_POST);
-    print_r("result: " . $result);
     if ($result) {
         $host = $_SERVER['HTTP_HOST'];
-        
-        //header("Location:http://$host/pw2-petshop/views/list-pets-view.php");
+        header("Location:http://$host/pw2-petshop/views/list-pets-view.php");
     }
 }
 ?>
