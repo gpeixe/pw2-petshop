@@ -62,10 +62,8 @@ class PetController extends Controller
             $breed = $data['breed'];
             $ownerPhone = $data['ownerPhone'];
             $pet = new Pet($name, $breed, $ownerPhone);
-            print_r("nao deu erro controller;");
             return $this->petRepository->create($pet);
         } catch (Exception $e) {
-            print_r("deu erro controller;");
             throw $e;
         }
     }

@@ -98,3 +98,8 @@ input {
 .destaque:active {
     box-shadow: none;
 }
+
+.error {
+    font-weight: bold;
+    color: red;
+}

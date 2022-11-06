@@ -18,9 +18,7 @@ class Pet {
         $isValidPhone = preg_match($exp, $ownerPhone);
         if ($isValidPhone) {
             $this->ownerPhone = $ownerPhone;
-            print_r("nao deu erro pet;");
         } else {
-            print_r("deu erro pet;");
           throw new ErrorException('Telefone do dono deve ser 11 números em sequencia.');
         }
 
