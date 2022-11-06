@@ -48,6 +48,7 @@ class EmployeeController extends Controller
             $employee->setId($id);
             return $this->employeeRepository->update($employee);
         } catch (\Throwable $th) {
+            print_r("Error");
             throw $th;
         }
     }

@@ -18,7 +18,6 @@ if (isPostRequest()) {
             header("Location:http://$host/pw2-petshop/views/list-employees-view.php");
         }
     } catch (Exception $e) {
-        print_r("teste");
         $error = $e->getMessage();
         echo "<h3>$error</h3>";
     }
