@@ -8,7 +8,7 @@ class AppointmentRepository {
     }
 
     function delete($appointmentId) {
-        $query = "DELETE FROM ATENDE WHERE ID = ?";
+        $query = "DELETE FROM atende WHERE ID = ?";
         $stmt =  $this->sqlConnection->prepare($query);
         $stmt->execute([$appointmentId]);
         if ($stmt->rowCount() > 0) return true;
@@ -16,8 +16,8 @@ class AppointmentRepository {
     }
 
     function getAll() {
-        $query = "SELECT ATENDE.ID as ID, IDFUNCIONARIO, IDANIMAL, DATA, FUNCIONÁRIO.NOME AS NOMEFUNCIONARIO, ANIMAL.NOME AS NOMEANIMAL, EMAIL, TELDONO, RACA
-         FROM ATENDE INNER JOIN ANIMAL ON ANIMAL.ID = ATENDE.IDANIMAL INNER JOIN FUNCIONÁRIO ON FUNCIONÁRIO.ID = ATENDE.IDFUNCIONARIO";
+        $query = "SELECT atende.ID as ID, IDFUNCIONARIO, IDANIMAL, DATA, funcionário.NOME AS NOMEFUNCIONARIO, animal.NOME AS NOMEANIMAL, EMAIL, TELDONO, RACA
+         FROM atende INNER JOIN animal ON animal.ID = atende.IDANIMAL INNER JOIN funcionário ON funcionário.ID = atende.IDFUNCIONARIO";
         $stmt =  $this->sqlConnection->prepare($query);
         $stmt->execute();
         $appointments = $stmt->fetchAll();
@@ -25,7 +25,7 @@ class AppointmentRepository {
     }
 
     function create($petId, $employeeId) {
-        $query = "INSERT INTO ATENDE (idanimal, idfuncionario, data) VALUES (?, ?, NOW())";
+        $query = "INSERT INTO atende (idanimal, idfuncionario, data) VALUES (?, ?, NOW())";
         $stmt =  $this->sqlConnection->prepare($query);
         $stmt->execute([$petId, $employeeId]);
         if ($stmt->rowCount() > 0) return true;

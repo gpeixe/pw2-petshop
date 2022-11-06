@@ -8,14 +8,14 @@ class EmployeeRepository {
     }
 
     function getAll() {
-        $query = "SELECT * FROM FUNCIONÁRIO;";
+        $query = "SELECT * FROM funcionário;";
         $stmt =  $this->sqlConnection->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
     }
 
     function getOne($employeeId) {
-        $query = "SELECT * FROM FUNCIONÁRIO WHERE ID = ?;";
+        $query = "SELECT * FROM funcionário WHERE ID = ?;";
         $stmt =  $this->sqlConnection->prepare($query);
         $stmt->execute([$employeeId]);
         $employeeFromDb = $stmt->fetchAll();
@@ -24,7 +24,7 @@ class EmployeeRepository {
     }
 
     function delete($employeeId) {
-        $query = "DELETE FROM FUNCIONÁRIO WHERE ID = ?;";
+        $query = "DELETE FROM funcionário WHERE ID = ?;";
         $stmt =  $this->sqlConnection->prepare($query);
         $stmt->execute([$employeeId]);
         if ($stmt->rowCount() > 0) return true;
@@ -35,7 +35,7 @@ class EmployeeRepository {
         $employeeName = $employee->getName();
         $employeeEmail = $employee->getEmail();
         $employeeId = $employee->getId();
-        $query = "UPDATE FUNCIONÁRIO SET nome = ?, email = ? WHERE id = ?;";
+        $query = "UPDATE funcionário SET nome = ?, email = ? WHERE id = ?;";
         $stmt =  $this->sqlConnection->prepare($query);
         $stmt->execute([$employeeName, $employeeEmail, $employeeId]);
         if ($stmt->rowCount() > 0) return true;
@@ -45,7 +45,7 @@ class EmployeeRepository {
     function create($employee) {
         $employeeName = $employee->getName();
         $employeeEmail = $employee->getEmail();
-        $query = "INSERT INTO FUNCIONÁRIO (NOME, EMAIL, DATACADASTRO) VALUES (?, ?, NOW());";
+        $query = "INSERT INTO funcionário (NOME, EMAIL, DATACADASTRO) VALUES (?, ?, NOW());";
         $stmt =  $this->sqlConnection->prepare($query);
         $stmt->execute([$employeeName, $employeeEmail]);
         if ($stmt->rowCount() > 0) return true;
@@ -53,7 +53,7 @@ class EmployeeRepository {
     }
 
     function getAllByPetName($petName) {
-        $query = "SELECT FUNCIONÁRIO.NOME,  FUNCIONÁRIO.ID, FUNCIONÁRIO.DATACADASTRO, FUNCIONÁRIO.EMAIL FROM FUNCIONÁRIO INNER JOIN ATENDE ON FUNCIONÁRIO.id = ATENDE.idfuncionario INNER JOIN ANIMAL ON ATENDE.idanimal = ANIMAL.id WHERE ANIMAL.nome = ?;";
+        $query = "SELECT funcionário.NOME,  funcionário.ID, funcionário.DATACADASTRO, funcionário.EMAIL FROM funcionário INNER JOIN atende ON funcionário.id = atende.idfuncionario INNER JOIN animal ON atende.idanimal = animal.id WHERE animal.nome = ?;";
         $stmt =  $this->sqlConnection->prepare($query);
         $stmt->execute([$petName]);
         return $stmt->fetchAll();

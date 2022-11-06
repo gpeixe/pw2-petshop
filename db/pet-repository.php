@@ -8,14 +8,14 @@ class PetRepository {
     }
 
     function getAll() {
-        $query = "SELECT * FROM ANIMAL;";
+        $query = "SELECT * FROM animal;";
         $stmt =  $this->sqlConnection->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
     }
 
     function getOne($petId) {
-        $query = "SELECT * FROM ANIMAL WHERE ID = $petId;";
+        $query = "SELECT * FROM animal WHERE ID = $petId;";
         $stmt =  $this->sqlConnection->prepare($query);
         $stmt->execute();
         $petFromDb = $stmt->fetchAll();
@@ -24,7 +24,7 @@ class PetRepository {
     }
 
     function delete($petId) {
-        $query = "DELETE FROM ANIMAL WHERE ID = ?;";
+        $query = "DELETE FROM animal WHERE ID = ?;";
         $stmt =  $this->sqlConnection->prepare($query);
         $stmt->execute([$petId]);
         if ($stmt->rowCount() > 0) return true;
@@ -36,7 +36,7 @@ class PetRepository {
         $petBreed = $pet->getBreed();
         $ownerPhone = $pet->getOwnerPhone();
         $petId = $pet->getId();
-        $query = "UPDATE ANIMAL SET nome = ?, raca = ?, teldono = ? WHERE id = ?;";
+        $query = "UPDATE animal SET NOME = ?, RACA = ?, TELDONO = ? WHERE id = ?;";
         $stmt =  $this->sqlConnection->prepare($query);
         $stmt->execute([$petName, $petBreed, $ownerPhone, $petId]);
         if ($stmt->rowCount() > 0) return true;
@@ -47,7 +47,7 @@ class PetRepository {
         $petName = $pet->getName();
         $petBreed = $pet->getBreed();
         $ownerPhone = $pet->getOwnerPhone();
-        $query = "INSERT INTO ANIMAL (NOME, RACA, TELDONO, DATACADASTRO) VALUES (?, ?, ?, NOW());";
+        $query = "INSERT INTO animal (NOME, RACA, TELDONO, DATACADASTRO) VALUES (?, ?, ?, NOW());";
         print_r("preparing query: " . $query);
         try {
             $stmt =  $this->sqlConnection->prepare($query);
@@ -65,9 +65,9 @@ class PetRepository {
     function getAllByEmployeeNameOrEmail($employeeNameOrEmail) {
         $query = "";
         if (filter_var($employeeNameOrEmail, FILTER_VALIDATE_EMAIL)) {
-            $query = "SELECT ANIMAL.ID, ANIMAL.NOME , ANIMAL.RACA, ANIMAL.DATACADASTRO, ANIMAL.TELDONO FROM ANIMAL INNER JOIN ATENDE ON ANIMAL.id = ATENDE.idanimal INNER JOIN FUNCIONÁRIO ON FUNCIONÁRIO.id = ATENDE.idfuncionario WHERE FUNCIONÁRIO.email = ?;";
+            $query = "SELECT animal.ID, animal.NOME , animal.RACA, animal.DATACADASTRO, animal.TELDONO FROM animal INNER JOIN atende ON animal.id = atende.idanimal INNER JOIN funcionário ON funcionário.id = atende.idfuncionario WHERE funcionário.email = ?;";
         } else {
-            $query = "SELECT ANIMAL.ID, ANIMAL.NOME , ANIMAL.RACA, ANIMAL.DATACADASTRO, ANIMAL.TELDONO  FROM ANIMAL INNER JOIN ATENDE ON ANIMAL.id = ATENDE.idanimal INNER JOIN FUNCIONÁRIO ON FUNCIONÁRIO.id = ATENDE.idfuncionario WHERE FUNCIONÁRIO.nome = ?;";
+            $query = "SELECT animal.ID, animal.NOME , animal.RACA, animal.DATACADASTRO, animal.TELDONO  FROM animal INNER JOIN atende ON animal.id = atende.idanimal INNER JOIN funcionário ON funcionário.id = atende.idfuncionario WHERE funcionário.NOME = ?;";
         }
         $stmt =  $this->sqlConnection->prepare($query);
         $stmt->execute([$employeeNameOrEmail]);
@@ -75,7 +75,7 @@ class PetRepository {
     }
 
     function getAllBreeds() {
-        $query = "SELECT DISTINCT(RACA) FROM ANIMAL;";
+        $query = "SELECT DISTINCT(RACA) FROM animal;";
         $stmt =  $this->sqlConnection->prepare($query);
         $stmt->execute();
         $breeds = $stmt->fetchAll();
@@ -83,14 +83,14 @@ class PetRepository {
     }
 
     function getAllByBreed($breed) {
-        $query = "SELECT * FROM ANIMAL WHERE raca = ?;";
+        $query = "SELECT * FROM animal WHERE RACA = ?;";
         $stmt =  $this->sqlConnection->prepare($query);
         $stmt->execute([$breed]);
         return $stmt->fetchAll();
     }
 
     function getAllByOwnerPhone($ownerPhone) {
-        $query = "SELECT * FROM ANIMAL WHERE teldono = ?;";
+        $query = "SELECT * FROM animal WHERE TELDONO = ?;";
         $stmt =  $this->sqlConnection->prepare($query);
         $stmt->execute([$ownerPhone]);
         return $stmt->fetchAll();
