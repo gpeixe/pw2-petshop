@@ -21,7 +21,7 @@ class Pet {
             print_r("nao deu erro pet;");
         } else {
             print_r("deu erro pet;");
-          throw new Error('Telefone do dono deve ser 11 números em sequencia.');
+          throw new ErrorException('Telefone do dono deve ser 11 números em sequencia.');
         }
 
     }

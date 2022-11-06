@@ -45,7 +45,7 @@ class Employee {
         if ($isValidEmail) {
             $this->email = $email;
         } else {
-            throw new Error('O campo email deve ser um e-mail válido.');
+            throw new ErrorException('O campo email deve ser um e-mail válido.');
         }
     }
 }
