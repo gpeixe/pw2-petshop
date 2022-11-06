@@ -30,36 +30,35 @@
                 </div>
                 <button class="c-botao destaque" type="submit">Salvar</button>
             </form>
-            
+            <?php
+
+            include_once("../db/sql-connection.php");
+            include_once("../db/pet-repository.php");
+            include_once("../controllers/pet-controller.php");
+            include_once("./helpers/http-helper.php");
+
+            $sqlConnection = SqlConnection::getConnection();
+            $petRepository = new PetRepository($sqlConnection);
+            $petController = new PetController($petRepository);
+
+            if (isPostRequest()) {
+                try {
+                    $result = $petController->create($_POST);
+                    if (gettype($result) === 'string') {
+                        echo "<h3 class='error' >Parametro $result é obrigatório.</h3>";
+                    } else if ($result) {
+                        $host = $_SERVER['HTTP_HOST'];
+                        header("Location:http://$host/pw2-petshop/views/list-pets-view.php");
+                    }
+                } catch (Exception $e) {
+                    $error = $e->getMessage();
+                    echo "<h3 class='error'>$error</h3>";
+                }
+            }
+            ?>
+
         </div>
     </div>
 </body>
 
 </html>
-
-<?php
-
-include_once("../db/sql-connection.php");
-include_once("../db/pet-repository.php");
-include_once("../controllers/pet-controller.php");
-include_once("./helpers/http-helper.php");
-
-$sqlConnection = SqlConnection::getConnection();
-$petRepository = new PetRepository($sqlConnection);
-$petController = new PetController($petRepository);
-
-if (isPostRequest()) {
-    try {
-        $result = $petController->create($_POST);
-        if (gettype($result) === 'string') {
-            echo "<h3 class='error' >Parametro $result é obrigatório.</h3>";
-        } else if ($result) {
-            $host = $_SERVER['HTTP_HOST'];
-            header("Location:http://$host/pw2-petshop/views/list-pets-view.php");
-        }
-    } catch (Exception $e) {
-        $error = $e->getMessage();
-        echo "<h3 class='error'>$error</h3>";
-    }
-}
-?>

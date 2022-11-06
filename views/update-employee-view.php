@@ -30,13 +30,7 @@
                 <button class="c-botao destaque" type="submit">Atualizar</button>
             </form>
         </div>
-
-    </div>
-</body>
-
-</html>
-
-<?php
+        <?php
 
 include_once("../db/sql-connection.php");
 include_once("../db/employee-repository.php");
@@ -82,3 +76,10 @@ if (isPostRequest()) {
 }
 
 ?>
+
+
+    </div>
+</body>
+
+</html>
+

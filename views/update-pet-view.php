@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="pt-Br">
 
@@ -32,55 +30,54 @@
                 </div>
                 <button class="c-botao destaque" type="submit">Atualizar</button>
             </form>
+            <?php
+
+            include_once("../db/sql-connection.php");
+            include_once("../db/pet-repository.php");
+            include_once("../controllers/pet-controller.php");
+            include_once("./helpers/http-helper.php");
+
+            $sqlConnection = SqlConnection::getConnection();
+            $petRepository = new PetRepository($sqlConnection);
+            $petController = new PetController($petRepository);
+
+            function navigateToListPetsView()
+            {
+                $host = $_SERVER['HTTP_HOST'];
+                header("Location:http://$host/pw2-petshop/views/list-pets-view.php");
+            }
+
+            function redirectIfPetIdIsNotPresent()
+            {
+                if (!isset($_GET['petId']) || empty($_GET['petId'])) {
+                    navigateToListPetsView();
+                }
+            }
+
+            redirectIfPetIdIsNotPresent();
+
+            $pet = $petController->getOne($_GET['petId']);
+
+            if (isPostRequest()) {
+                try {
+                    $_POST['id'] = $_GET['petId'];
+                    $result = $petController->update($_POST);
+                    if (gettype($result) === 'string') {
+                        echo "<h3>Parametro $result é obrigatório.</h3>";
+                    } else {
+                        navigateToListPetsView();
+                    }
+                } catch (Exception $e) {
+                    $error = $e->getMessage();
+                    echo "<h3>$error</h3>";
+                }
+            } else if (!$pet) {
+                navigateToListPetsView();
+            }
+
+            ?>
         </div>
     </div>
 </body>
 
 </html>
-
-<?php
-
-include_once("../db/sql-connection.php");
-include_once("../db/pet-repository.php");
-include_once("../controllers/pet-controller.php");
-include_once("./helpers/http-helper.php");
-
-$sqlConnection = SqlConnection::getConnection();
-$petRepository = new PetRepository($sqlConnection);
-$petController = new PetController($petRepository);
-
-function navigateToListPetsView()
-{
-    $host = $_SERVER['HTTP_HOST'];
-    header("Location:http://$host/pw2-petshop/views/list-pets-view.php");
-}
-
-function redirectIfPetIdIsNotPresent()
-{
-    if (!isset($_GET['petId']) || empty($_GET['petId'])) {
-        navigateToListPetsView();
-    }
-}
-
-redirectIfPetIdIsNotPresent();
-
-$pet = $petController->getOne($_GET['petId']);
-
-if (isPostRequest()) {
-    try {
-        $_POST['id'] = $_GET['petId'];
-        $result = $petController->update($_POST);
-        if (gettype($result) === 'string') {
-            echo "<h3>Parametro $result é obrigatório.</h3>";
-        } else {
-            navigateToListPetsView();
-        }
-    } catch (Exception $e) {
-        $error = $e->getMessage();
-        echo "<h3>$error</h3>";
-    }
-} else if (!$pet) {
-    navigateToListPetsView();
-}
-
-?>

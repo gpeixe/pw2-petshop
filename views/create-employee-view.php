@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="pt-Br">
 
@@ -28,35 +26,34 @@
                 </div>
                 <button class="c-botao destaque" type="submit">Salvar</button>
             </form>
+            <?php
+
+            include_once("../db/sql-connection.php");
+            include_once("../db/employee-repository.php");
+            include_once("../controllers/employee-controller.php");
+            include_once("./helpers/http-helper.php");
+            $sqlConnection = SqlConnection::getConnection();
+            $employeeRepository = new EmployeeRepository($sqlConnection);
+            $employeeController = new EmployeeController($employeeRepository);
+
+            if (isPostRequest()) {
+                try {
+                    $result = $employeeController->create($_POST);
+                    if (gettype($result) === 'string') {
+                        echo "<h3 class='error' >Parametro $result é obrigatório.</h3>";
+                    } else if ($result) {
+                        $host = $_SERVER['HTTP_HOST'];
+                        header("Location:http://$host/pw2-petshop/views/list-employees-view.php");
+                    }
+                } catch (Exception $e) {
+                    $error = $e->getMessage();
+                    echo "<h3 class='error'>$error</h3>";
+                }
+            }
+
+            ?>
         </div>
     </div>
 </body>
 
 </html>
-
-<?php
-
-include_once("../db/sql-connection.php");
-include_once("../db/employee-repository.php");
-include_once("../controllers/employee-controller.php");
-include_once("./helpers/http-helper.php");
-$sqlConnection = SqlConnection::getConnection();
-$employeeRepository = new EmployeeRepository($sqlConnection);
-$employeeController = new EmployeeController($employeeRepository);
-
-if (isPostRequest()) {
-    try {
-        $result = $employeeController->create($_POST);
-        if (gettype($result) === 'string') {
-            echo "<h3 class='error' >Parametro $result é obrigatório.</h3>";
-        } else if ($result) {
-            $host = $_SERVER['HTTP_HOST'];
-            header("Location:http://$host/pw2-petshop/views/list-employees-view.php");
-        }
-    } catch (Exception $e) {
-        $error = $e->getMessage();
-        echo "<h3 class='error'>$error</h3>";
-    }
-}
-
-?>
