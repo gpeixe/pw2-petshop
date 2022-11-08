@@ -26,20 +26,7 @@
 
             $pet = $petController->getOne($_GET['petId']);
 
-            if (isPostRequest()) {
-                try {
-                    $_POST['id'] = $_GET['petId'];
-                    $result = $petController->update($_POST);
-                    if (gettype($result) === 'string') {
-                        echo "<h3>Parametro $result é obrigatório.</h3>";
-                    } else {
-                        navigateToListPetsView();
-                    }
-                } catch (Exception $e) {
-                    $error = $e->getMessage();
-                    echo "<h3>$error</h3>";
-                }
-            } else if (!$pet) {
+            if (!$pet) {
                 navigateToListPetsView();
             }
 
@@ -77,6 +64,23 @@
                 </div>
                 <button class="c-botao destaque" type="submit">Atualizar</button>
             </form>
+            <?php 
+            if (isPostRequest()) {
+                try {
+                    $_POST['id'] = $_GET['petId'];
+                    $result = $petController->update($_POST);
+                    if (gettype($result) === 'string') {
+                        echo "<h3>Parametro $result é obrigatório.</h3>";
+                    } else {
+                        navigateToListPetsView();
+                    }
+                } catch (Exception $e) {
+                    $error = $e->getMessage();
+                    echo "<h3>$error</h3>";
+                }
+            } else 
+            
+            ?>
             
         </div>
     </div>
