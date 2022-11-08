@@ -70,13 +70,13 @@
                     $_POST['id'] = $_GET['petId'];
                     $result = $petController->update($_POST);
                     if (gettype($result) === 'string') {
-                        echo "<h3>Parametro $result é obrigatório.</h3>";
+                        echo "<h3 class='error'>Parametro $result é obrigatório.</h3>";
                     } else {
                         navigateToListPetsView();
                     }
                 } catch (Exception $e) {
                     $error = $e->getMessage();
-                    echo "<h3>$error</h3>";
+                    echo "<h3 class='error'>$error</h3>";
                 }
             } else 
             
