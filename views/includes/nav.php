@@ -10,7 +10,7 @@
 
 <style>
 .a-navegador {
-    background-color: rgb(9, 186, 209);
+    background-color: red;
     display: flex;
     width: 100%;
     height: 10vh;
